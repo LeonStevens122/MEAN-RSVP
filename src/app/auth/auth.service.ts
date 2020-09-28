@@ -20,8 +20,10 @@ export class AuthService {
   accessToken: string;
   userProfile: any;
   expiresAt: number;
-  // Create a stream of logged in status to communicate throughout app
+  isAdmin: boolean;
   loggedIn: boolean;
+  // Create a stream of logged in status to communicate throughout app
+
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
   loggingIn: boolean;
 
@@ -73,7 +75,10 @@ export class AuthService {
     // Store expiration in local storage to access in constructor
     localStorage.setItem('expires_at', JSON.stringify(this.expiresAt));
     this.accessToken = authResult.accessToken;
-    this.userProfile = profile;
+    if (profile) {
+      this.userProfile = profile;
+      this.isAdmin = this._checkAdmin(profile);
+    }
     // Update login status in loggedIn$ stream
     this.setLoggedIn(true);
     this.loggingIn = false;
@@ -82,6 +87,11 @@ export class AuthService {
   private _clearExpiration() {
     // Remove token expiration from localStorage
     localStorage.removeItem('expires_at');
+  }
+  private _checkAdmin(profile) {
+    // Check id the user has Admin Role
+    const roles = profile[AUTH_CONFIG.NAMESPACE] || [];
+    return roles.indexOf('admin') > -1;
   }
 
   logout() {
