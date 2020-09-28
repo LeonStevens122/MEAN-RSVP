@@ -12,6 +12,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const cors = require("cors");
+const MongoClient = require("mongodb").MongoClient;
 // Config
 
 const config = require("./server/config");
@@ -22,21 +23,17 @@ const config = require("./server/config");
  |--------------------------------------
  */
 
-mongoose.connect(config.MONGO_URI, { useUnifiedTopology: true });
-const monDb = mongoose.connection;
+const client = new MongoClient(
+  config.MONGO_URI,
+  { useUnifiedTopology: true },
+  { useNewUrlParser: true }
+);
 
-monDb.on("error", function () {
-  console.error(
-    "MongoDB Connection Error. Please make sure that",
-    config.MONGO_URI,
-    "is running."
-  );
+client.connect((err) => {
+  const collection = client.db("events").collection("devices");
+  // perform actions on the collection object
+  console.log("connected to DB ", collection.namespace);
 });
-
-monDb.once("open", function callback() {
-  console.info("Connected to MongoDB:", config.MONGO_URI);
-});
-
 /*
  |--------------------------------------
  | App
