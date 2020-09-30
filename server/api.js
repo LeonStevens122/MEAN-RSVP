@@ -23,10 +23,10 @@ module.exports = function (app, config) {
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
-      jwksUri: "https://dev-37ogfblt.eu.auth0.com/.well-known/jwks.json",
+      jwksUri: `https://${config.AUTH0_DOMAIN}/.well-known/jwks.json`,
     }),
-    audience: "http://localhost:8083/api/",
-    issuer: "https://dev-37ogfblt.eu.auth0.com/",
+    audience: config.AUTH0_API_AUDIENCE,
+    issuer: `https://${config.AUTH0_DOMAIN}/`,
     algorithms: ["RS256"],
   });
 
@@ -103,22 +103,19 @@ module.exports = function (app, config) {
     });
   });
 
- // GET RSVPs by event ID
- app.get('/api/event/:eventId/rsvps', jwtCheck, (req, res) => {
-  Rsvp.find({eventId: req.params.eventId}, (err, rsvps) => {
-    let rsvpsArr = [];
-    if (err) {
-      return res.status(500).send({message: err.message});
-    }
-    if (rsvps) {
-      rsvps.forEach(rsvp => {
-        rsvpsArr.push(rsvp);
-      });
-    }
-    res.send(rsvpsArr);
+  // GET RSVPs by event ID
+  app.get("/api/event/:eventId/rsvps", jwtCheck, (req, res) => {
+    Rsvp.find({ eventId: req.params.eventId }, (err, rsvps) => {
+      let rsvpsArr = [];
+      if (err) {
+        return res.status(500).send({ message: err.message });
+      }
+      if (rsvps) {
+        rsvps.forEach((rsvp) => {
+          rsvpsArr.push(rsvp);
+        });
+      }
+      res.send(rsvpsArr);
+    });
   });
-});
-
-
-
 };

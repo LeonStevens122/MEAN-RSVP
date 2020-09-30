@@ -14,6 +14,10 @@ import { AuthService } from './auth/auth.service';
 import { CallbackComponent } from './pages/callback/callback.component';
 import { ApiService } from './core/api.service';
 import { LoadingComponent } from './core/loading.component';
+import { DatePipe } from '@angular/common';
+import { UtilsService } from './core/utils.service';
+import { FilterSortService } from './core/filter-sort.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,8 +28,15 @@ import { LoadingComponent } from './core/loading.component';
     CallbackComponent,
     LoadingComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
-  providers: [Title, AuthService, ApiService],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
+  providers: [
+    Title,
+    AuthService,
+    ApiService,
+    DatePipe,
+    UtilsService,
+    FilterSortService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
