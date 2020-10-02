@@ -43,8 +43,7 @@ export class RsvpFormComponent implements OnInit, OnDestroy {
         this.auth.userProfile.sub,
         this.auth.userProfile.name,
         this.eventId,
-        null,
-        0
+        null
       );
     } else {
       // If editing an existing RSVP,
