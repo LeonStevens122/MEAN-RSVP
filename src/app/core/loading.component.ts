@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loading',
-  template: ` <img src="/assets/images/loading.svg" /> `,
+  template: ` <img src="./assets/images/loading.svg" /> `,
   styles: [
     `
       :host {

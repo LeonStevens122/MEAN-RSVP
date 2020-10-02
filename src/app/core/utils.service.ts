@@ -39,6 +39,11 @@ export class UtilsService {
     }
   }
 
+  tabIs(currentTab: string, tab: string): boolean {
+    // Check if current tab is tab name
+    return currentTab === tab;
+  }
+
   eventPast(eventEnd): boolean {
     // Check if event has already ended
     const now = new Date();

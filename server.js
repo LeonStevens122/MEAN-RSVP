@@ -22,18 +22,47 @@ const config = require("./server/config");
  | MongoDB
  |--------------------------------------
  */
+require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
+
+const mongoUser = config.MONGOUSER;
+const mongoPassword = config.MONGOPASS;
+
+console.log("Mongo UserName : ", mongoUser);
+
+const uri =
+  "mongodb+srv://" +
+  mongoUser +
+  ":" +
+  mongoPassword +
+  "@hyperion-dev-leon-stevens-webdev-qiwgg.mongodb.net/bugtracker?authSource=admin&replicaSet=Hyperion-Dev-Leon-Stevens-WebDev-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true";
 
 const client = new MongoClient(
-  config.MONGO_URI,
+  uri,
   { useUnifiedTopology: true },
   { useNewUrlParser: true }
 );
-
-client.connect((err) => {
-  const collection = client.db("events").collection("devices");
-  // perform actions on the collection object
-  console.log("connected to DB ", collection.namespace);
+mongoose
+  .connect(uri, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => console.log("DB Connected!"))
+  .catch((err) => {
+    console.log("DB Connection Error: ", err.message);
+  });
+// show error if no connection to the database can be established
+mongoose.connection.on("error", function (err) {
+  console.log("Could not connect to the database. Exiting now...", err);
+  process.exit();
 });
+
+// confirm database connection with log
+mongoose.connection.once("open", function () {
+  console.log("Successfully connected to the database");
+});
+
 /*
  |--------------------------------------
  | App
