@@ -1,4 +1,3 @@
-import { EventModel } from './models/event.model';
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
@@ -9,11 +8,9 @@ import { AuthService } from './../auth/auth.service';
 import { throwError as ObservableThrowError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ENV } from './env.config';
-
-console.log('env: ', ENV);
-
+import { EventModel } from './models/event.model';
 import { RsvpModel } from './models/rsvp.model';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+
 @Injectable()
 export class ApiService {
   constructor(private http: HttpClient, private auth: AuthService) {}
@@ -23,7 +20,6 @@ export class ApiService {
   }
 
   // GET list of public, future events
-
   getEvents$(): Observable<EventModel[]> {
     return this.http
       .get<EventModel[]>(`${ENV.BASE_API}events`)
@@ -32,7 +28,6 @@ export class ApiService {
 
   // GET all events - private and public (admin only)
   getAdminEvents$(): Observable<EventModel[]> {
-    console.log('Get ENV.BASE :', ENV.BASE_API);
     return this.http
       .get<EventModel[]>(`${ENV.BASE_API}events/admin`, {
         headers: new HttpHeaders().set('Authorization', this._authHeader),

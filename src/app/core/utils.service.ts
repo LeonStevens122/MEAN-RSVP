@@ -50,4 +50,22 @@ export class UtilsService {
     const then = new Date(eventEnd.toString());
     return now >= then;
   }
+
+  displayCount(guests: number): string {
+    const persons = guests === 1 ? ' person' : ' people';
+
+    return guests + persons;
+  }
+
+  showPlusOnes(guests: number): string {
+    // If bringing additional guests, show as "+n"
+    if (guests) {
+      return `+${guests}`;
+    }
+  }
+
+  booleanToText(bool: boolean): string {
+    // change Boolean value t0 Yes/No string
+    return bool ? 'Yes' : 'No';
+  }
 }

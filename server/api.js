@@ -54,7 +54,7 @@ module.exports = function (app, config) {
   });
 
   // GET list of public events starting in the future
-  app.get("/api/events/", (req, res) => {
+  app.get("/api/events", (req, res) => {
     Event.find(
       { viewPublic: true, startDatetime: { $gte: new Date() } },
       _eventListProjection,
@@ -161,10 +161,12 @@ module.exports = function (app, config) {
           return res.status(500).send({ message: err.message });
         }
         if (existingEvent) {
-          return res.status(409).send({
-            message:
-              "You have already created an event with this title, location, and start date/time.",
-          });
+          return res
+            .status(409)
+            .send({
+              message:
+                "You have already created an event with this title, location, and start date/time.",
+            });
         }
         const event = new Event({
           title: req.body.title,

@@ -3,6 +3,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // import Modules
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +23,8 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { EventComponent } from './pages/event/event.component';
 import { EventDetailComponent } from './pages/event/event-detail/event-detail.component';
 import { RsvpComponent } from './pages/event/rsvp/rsvp.component';
+import { RsvpFormComponent } from './pages/event/rsvp/rsvp-form/rsvp-form.component';
+import { SubmittingComponent } from './core/forms/submitting.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +38,16 @@ import { RsvpComponent } from './pages/event/rsvp/rsvp.component';
     EventComponent,
     EventDetailComponent,
     RsvpComponent,
+    RsvpFormComponent,
+    SubmittingComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
+  imports: [
+    BrowserAnimationsModule,
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    FormsModule,
+  ],
   providers: [
     Title,
     AuthService,
