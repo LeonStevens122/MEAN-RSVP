@@ -51,6 +51,11 @@ export class UtilsService {
     return now >= then;
   }
 
+  capitalize(str: string): string {
+    // Capitalize first letter of string
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   displayCount(guests: number): string {
     const persons = guests === 1 ? ' person' : ' people';
 

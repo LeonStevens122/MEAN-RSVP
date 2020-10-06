@@ -21,7 +21,6 @@ export class AuthService {
   userProfile: any;
   expiresAt: number;
   isAdmin: boolean;
-
   // Create a stream of logged in status to communicate throughout app
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
@@ -182,7 +181,4 @@ export class AuthService {
       this.refreshSub.unsubscribe();
     }
   }
-
-
-
 }

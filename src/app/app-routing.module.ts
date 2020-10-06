@@ -1,13 +1,12 @@
-import { UpdateEventComponent } from './pages/admin/update-event/update-event.component';
-import { CreateEventComponent } from './pages/admin/create-event/create-event.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { CallbackComponent } from './pages/callback/callback.component';
+// Route guards
 import { AuthGuard } from './auth/auth.guard';
 import { AdminGuard } from './auth/admin.guard';
-import { AdminComponent } from './pages/admin/admin.component';
-import { EventComponent } from './pages/event/event.component';
+// Page components
+import { HomeComponent } from './pages/home/home.component';
+import { CallbackComponent } from './pages/callback/callback.component';
+import { MyRsvpsComponent } from './pages/my-rsvps/my-rsvps.component';
 
 const routes: Routes = [
   {
@@ -20,32 +19,29 @@ const routes: Routes = [
   },
   {
     path: 'event/:id',
-    component: EventComponent,
+    loadChildren: './pages/event/event.module#EventModule',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'my-rsvps',
+    component: MyRsvpsComponent,
     canActivate: [AuthGuard],
   },
   {
     path: 'admin',
+    loadChildren: './pages/admin/admin.module#AdminModule',
     canActivate: [AuthGuard, AdminGuard],
-    children: [
-      {
-        path: '',
-        component: AdminComponent,
-      },
-      {
-        path: 'event/new',
-        component: CreateEventComponent,
-      },
-      {
-        path: 'event/update/:id',
-        component: UpdateEventComponent,
-      },
-    ],
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
   providers: [AuthGuard, AdminGuard],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
