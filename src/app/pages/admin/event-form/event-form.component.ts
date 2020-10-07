@@ -11,7 +11,7 @@ import { ApiService } from './../../../core/api.service';
 import { EventModel, FormEventModel } from './../../../core/models/event.model';
 import { DatePipe } from '@angular/common';
 import { dateValidator } from './../../../core/forms/date.validator';
-import { dateRangeValidator } from '../../../core/forms/date-range.validator';
+import { dateRangeValidator } from './../../../core/forms/date-range.validator';
 import {
   DATE_REGEX,
   TIME_REGEX,
@@ -51,7 +51,7 @@ export class EventFormComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): any {
     this.formErrors = this.ef.formErrors;
     this.isEdit = !!this.event;
     this.submitBtnText = this.isEdit ? 'Update Event' : 'Create Event';
@@ -61,7 +61,7 @@ export class EventFormComponent implements OnInit, OnDestroy {
     this._buildForm();
   }
 
-  private _setFormEvent() {
+  private _setFormEvent(): any {
     if (!this.isEdit) {
       // If creating a new event, create new
       // FormEventModel with default null data
