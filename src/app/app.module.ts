@@ -1,3 +1,4 @@
+import { EventModule } from './pages/event/event.module';
 import { AdminModule } from './pages/admin/admin.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +25,7 @@ import { MyRsvpsComponent } from './pages/my-rsvps/my-rsvps.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     AdminModule,
+    EventModule,
     AuthModule.forRoot(),
     CoreModule.forRoot(),
   ],
